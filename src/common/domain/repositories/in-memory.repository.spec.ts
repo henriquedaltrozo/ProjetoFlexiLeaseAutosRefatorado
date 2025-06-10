@@ -5,7 +5,10 @@ import { NotFoundError } from '../errors/not-found-error'
 type StubModelProps = {
   id: string
   name: string
-  price: number
+  color: string
+  year: number
+  value_per_day: number
+  number_of_passengers: number
   created_at: Date
   updated_at: Date
 }
@@ -39,8 +42,11 @@ describe('InMemoryRepository unit tests', () => {
     created_at = new Date()
     updated_at = new Date()
     props = {
-      name: 'test name',
-      price: 10,
+      name: 'test vehicle',
+      color: 'red',
+      year: 2020,
+      value_per_day: 100.5,
+      number_of_passengers: 5,
     }
     model = {
       id: randomUUID(),
@@ -53,7 +59,7 @@ describe('InMemoryRepository unit tests', () => {
   describe('create', () => {
     it('should create a new model', () => {
       const result = sut.create(props)
-      expect(result.name).toStrictEqual('test name')
+      expect(result.name).toStrictEqual('test vehicle')
     })
   })
 
@@ -93,8 +99,11 @@ describe('InMemoryRepository unit tests', () => {
       const data = await sut.insert(model)
       const modelUpdated = {
         id: data.id,
-        name: 'updated name',
-        price: 2000,
+        name: 'updated vehicle',
+        color: 'blue',
+        year: 2021,
+        value_per_day: 150,
+        number_of_passengers: 4,
         created_at,
         updated_at,
       }
@@ -133,9 +142,36 @@ describe('InMemoryRepository unit tests', () => {
 
     it('should filter the data using filter param', async () => {
       const items = [
-        { id: randomUUID(), name: 'test', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'TEST', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'fake', price: 30, created_at, updated_at },
+        {
+          id: randomUUID(),
+          name: 'test',
+          color: 'red',
+          year: 2020,
+          value_per_day: 100,
+          number_of_passengers: 4,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'TEST',
+          color: 'blue',
+          year: 2021,
+          value_per_day: 200,
+          number_of_passengers: 5,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'fake',
+          color: 'white',
+          year: 2019,
+          value_per_day: 50,
+          number_of_passengers: 2,
+          created_at,
+          updated_at,
+        },
       ]
       const spyFilterMethod = jest.spyOn(items, 'filter' as any)
       let result = await sut['applyFilter'](items, 'TEST')
@@ -155,9 +191,36 @@ describe('InMemoryRepository unit tests', () => {
   describe('applySort', () => {
     it('should not sort items', async () => {
       const items = [
-        { id: randomUUID(), name: 'test', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'TEST', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'fake', price: 30, created_at, updated_at },
+        {
+          id: randomUUID(),
+          name: 'test',
+          color: 'red',
+          year: 2020,
+          value_per_day: 100,
+          number_of_passengers: 4,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'TEST',
+          color: 'blue',
+          year: 2021,
+          value_per_day: 200,
+          number_of_passengers: 5,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'fake',
+          color: 'white',
+          year: 2019,
+          value_per_day: 50,
+          number_of_passengers: 2,
+          created_at,
+          updated_at,
+        },
       ]
       let result = await sut['applySort'](items, null, null)
       expect(result).toStrictEqual(items)
@@ -168,9 +231,36 @@ describe('InMemoryRepository unit tests', () => {
 
     it('should sort items', async () => {
       const items = [
-        { id: randomUUID(), name: 'b', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'c', price: 30, created_at, updated_at },
+        {
+          id: randomUUID(),
+          name: 'b',
+          color: '',
+          year: 2020,
+          value_per_day: 10,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'a',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'c',
+          color: '',
+          year: 2020,
+          value_per_day: 30,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
       ]
       let result = await sut['applySort'](items, 'name', 'desc')
       expect(result).toStrictEqual([items[2], items[0], items[1]])
@@ -182,13 +272,16 @@ describe('InMemoryRepository unit tests', () => {
 
   describe('applyPaginate', () => {
     it('should paginate items', async () => {
-      const items = [
-        { id: randomUUID(), name: 'a', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'b', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'c', price: 30, created_at, updated_at },
-        { id: randomUUID(), name: 'd', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'e', price: 30, created_at, updated_at },
-      ]
+      const items = Array.from({ length: 5 }, (_, i) => ({
+        id: randomUUID(),
+        name: String.fromCharCode(97 + i),
+        color: 'white',
+        year: 2020,
+        value_per_day: 100,
+        number_of_passengers: 4,
+        created_at,
+        updated_at,
+      }))
       let result = await sut['applyPaginate'](items, 1, 2)
       expect(result).toStrictEqual([items[0], items[1]])
 
@@ -202,8 +295,7 @@ describe('InMemoryRepository unit tests', () => {
 
   describe('search', () => {
     it('should paginate items', async () => {
-      const items = Array(16).fill(model)
-      sut.items = items
+      sut.items = Array(16).fill(model)
       const result = await sut.search({})
       expect(result).toStrictEqual({
         items: Array(15).fill(model),
@@ -218,10 +310,46 @@ describe('InMemoryRepository unit tests', () => {
 
     it('should apply paginate and filter', async () => {
       const items = [
-        { id: randomUUID(), name: 'test', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'TEST', price: 30, created_at, updated_at },
-        { id: randomUUID(), name: 'TeSt', price: 20, created_at, updated_at },
+        {
+          id: randomUUID(),
+          name: 'test',
+          color: '',
+          year: 2020,
+          value_per_day: 10,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'a',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'TEST',
+          color: '',
+          year: 2020,
+          value_per_day: 30,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'TeSt',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
       ]
       sut.items = items
       const result = await sut.search({
@@ -242,11 +370,56 @@ describe('InMemoryRepository unit tests', () => {
 
     it('should apply paginate and sort', async () => {
       const items = [
-        { id: randomUUID(), name: 'b', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'd', price: 30, created_at, updated_at },
-        { id: randomUUID(), name: 'e', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'c', price: 20, created_at, updated_at },
+        {
+          id: randomUUID(),
+          name: 'b',
+          color: '',
+          year: 2020,
+          value_per_day: 10,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'a',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'd',
+          color: '',
+          year: 2020,
+          value_per_day: 30,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'e',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'c',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
       ]
       sut.items = items
       let result = await sut.search({
@@ -284,11 +457,56 @@ describe('InMemoryRepository unit tests', () => {
 
     it('should search using filter, sort and paginate', async () => {
       const items = [
-        { id: randomUUID(), name: 'TEST', price: 10, created_at, updated_at },
-        { id: randomUUID(), name: 'a', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'test', price: 30, created_at, updated_at },
-        { id: randomUUID(), name: 'e', price: 20, created_at, updated_at },
-        { id: randomUUID(), name: 'TeSt', price: 20, created_at, updated_at },
+        {
+          id: randomUUID(),
+          name: 'TEST',
+          color: '',
+          year: 2020,
+          value_per_day: 10,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'a',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'test',
+          color: '',
+          year: 2020,
+          value_per_day: 30,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'e',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
+        {
+          id: randomUUID(),
+          name: 'TeSt',
+          color: '',
+          year: 2020,
+          value_per_day: 20,
+          number_of_passengers: 1,
+          created_at,
+          updated_at,
+        },
       ]
       sut.items = items
       let result = await sut.search({
