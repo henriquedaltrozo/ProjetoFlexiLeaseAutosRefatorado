@@ -7,7 +7,7 @@ export type VehicleId = {
 
 export type CreateVehicleProps = {
   id: string
-  model: string
+  name: string
   color: string
   year: number
   value_per_day: number
@@ -22,6 +22,6 @@ export type CreateVehicleProps = {
 export interface VehiclesRepository
   extends RepositoryInterface<VehicleModel, CreateVehicleProps> {
   findByName(name: string): Promise<VehicleModel>
-  findAllByIds(ids: VehicleId[]): Promise<VehicleModel[]>
+  findAllByIds(vehicleIds: VehicleId[]): Promise<VehicleModel[]>
   conflictingName(name: string): Promise<void>
 }

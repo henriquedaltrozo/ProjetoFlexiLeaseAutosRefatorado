@@ -21,7 +21,7 @@ export class CreateVehicles1749063167304 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'model',
+            name: 'name',
             type: 'varchar',
           },
           {

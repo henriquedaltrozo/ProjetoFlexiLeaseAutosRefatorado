@@ -1,6 +1,6 @@
 export interface VehicleModel {
   id: string
-  model: string
+  name: string
   color: string
   year: number
   value_per_day: number

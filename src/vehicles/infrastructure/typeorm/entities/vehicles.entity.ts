@@ -14,7 +14,7 @@ export class Vehicle {
   id: string
 
   @Column('varchar')
-  model: string
+  name: string
 
   @Column('varchar')
   color: string
