@@ -2,11 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Accessory } from './accessories.entity'
 
 @Entity('vehicles')
 export class Vehicle {
@@ -27,9 +25,6 @@ export class Vehicle {
 
   @Column('int')
   number_of_passengers: number
-
-  @OneToMany(() => Accessory, accessory => accessory.vehicle, { cascade: true })
-  accessories: Accessory[]
 
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date

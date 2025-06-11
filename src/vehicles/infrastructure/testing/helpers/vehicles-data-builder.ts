@@ -15,11 +15,6 @@ export function VehiclesDataBuilder(
       Number(faker.commerce.price({ min: 100, max: 1000 })),
     number_of_passengers:
       props.number_of_passengers ?? faker.number.int({ min: 2, max: 7 }),
-    accessories: props.accessories ?? [
-      {
-        description: faker.commerce.product(),
-      },
-    ],
     created_at: props.created_at ?? new Date(),
     updated_at: props.updated_at ?? new Date(),
   }

@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm'
+import { MigrationInterface, QueryRunner, Table } from 'typeorm'
 
 export class CreateVehicles1749063167304 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -53,43 +48,9 @@ export class CreateVehicles1749063167304 implements MigrationInterface {
         ],
       }),
     )
-
-    await queryRunner.createTable(
-      new Table({
-        name: 'accessories',
-        columns: [
-          {
-            name: 'id',
-            type: 'uuid',
-            isPrimary: true,
-            generationStrategy: 'uuid',
-            default: 'uuid_generate_v4()',
-          },
-          {
-            name: 'description',
-            type: 'varchar',
-          },
-          {
-            name: 'vehicle_id',
-            type: 'uuid',
-          },
-        ],
-      }),
-    )
-
-    await queryRunner.createForeignKey(
-      'accessories',
-      new TableForeignKey({
-        columnNames: ['vehicle_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'vehicles',
-        onDelete: 'CASCADE',
-      }),
-    )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('accessories')
     await queryRunner.dropTable('vehicles')
   }
 }
