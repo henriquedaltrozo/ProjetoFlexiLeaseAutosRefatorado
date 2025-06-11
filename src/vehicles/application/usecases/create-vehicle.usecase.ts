@@ -30,7 +30,7 @@ export namespace CreateVehicleUseCase {
         !input.color ||
         !input.year ||
         input.value_per_day <= 0 ||
-        input.number_of_passengers <= 2
+        input.number_of_passengers <= 1
       ) {
         throw new BadRequestError('Input data not provided or invalid')
       }
