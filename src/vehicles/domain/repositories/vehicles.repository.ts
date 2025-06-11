@@ -6,14 +6,14 @@ export type VehicleId = {
 }
 
 export type CreateVehicleProps = {
-  id: string
+  id?: string
   name: string
   color: string
   year: number
   value_per_day: number
   number_of_passengers: number
-  created_at: Date
-  updated_at: Date
+  created_at?: Date
+  updated_at?: Date
 }
 
 export interface VehiclesRepository
