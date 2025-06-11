@@ -9,9 +9,11 @@ import { VehicleModel } from '@/vehicles/domain/models/vehicles.model'
 
 describe('VehiclesTypeormRepository integration tests', () => {
   let ormRepository: VehiclesTypeOrmRepository
+  let typeormEntityManager: any
 
   beforeAll(async () => {
     await testDataSource.initialize()
+    typeormEntityManager = testDataSource.createEntityManager()
   })
 
   afterAll(async () => {
@@ -20,8 +22,9 @@ describe('VehiclesTypeormRepository integration tests', () => {
 
   beforeEach(async () => {
     await testDataSource.manager.query('DELETE FROM vehicles')
-    ormRepository = new VehiclesTypeOrmRepository()
-    ormRepository.vehiclesRepository = testDataSource.getRepository(Vehicle)
+    ormRepository = new VehiclesTypeOrmRepository(
+      typeormEntityManager.getRepository(Vehicle),
+    )
   })
 
   describe('findById', () => {

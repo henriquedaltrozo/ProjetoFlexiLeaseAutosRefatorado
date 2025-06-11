@@ -1,10 +1,8 @@
 import { AppError } from '@/common/domain/errors/app-error'
 import { Request, Response } from 'express'
 import { z } from 'zod'
-import { dataSource } from '@/common/infrastructure/typeorm'
-import { VehiclesTypeOrmRepository } from '../../typeorm/repositories/vehicles-typeorm.repository'
 import { CreateVehicleUseCase } from '@/vehicles/application/usecases/create-vehicle.usecase'
-import { Vehicle } from '../../typeorm/entities/vehicles.entity'
+import { container } from 'tsyringe'
 
 export async function createVehicleController(
   request: Request,
@@ -32,9 +30,9 @@ export async function createVehicleController(
   const { name, color, year, value_per_day, number_of_passengers } =
     validatedData.data
 
-  const repository = new VehiclesTypeOrmRepository()
-  repository.vehiclesRepository = dataSource.getRepository(Vehicle)
-  const createVehicleUseCase = new CreateVehicleUseCase.UseCase(repository)
+  const createVehicleUseCase: CreateVehicleUseCase.UseCase = container.resolve(
+    'CreateVehicleUseCase',
+  )
 
   const vehicle = await createVehicleUseCase.execute({
     name,

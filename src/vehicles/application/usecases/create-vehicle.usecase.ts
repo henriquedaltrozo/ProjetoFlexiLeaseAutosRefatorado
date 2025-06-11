@@ -1,5 +1,6 @@
 import { BadRequestError } from '@/common/domain/errors/bad-request-error'
 import { VehiclesRepository } from '@/vehicles/domain/repositories/vehicles.repository'
+import { inject, injectable } from 'tsyringe'
 
 export namespace CreateVehicleUseCase {
   export type Input = {
@@ -21,8 +22,12 @@ export namespace CreateVehicleUseCase {
     updated_at: Date
   }
 
+  @injectable()
   export class UseCase {
-    constructor(private vehiclesRepository: VehiclesRepository) {}
+    constructor(
+      @inject('VehicleRepository')
+      private vehiclesRepository: VehiclesRepository,
+    ) {}
 
     async execute(input: Input): Promise<Output> {
       if (

@@ -9,18 +9,19 @@ import {
   VehiclesRepository,
 } from '@/vehicles/domain/repositories/vehicles.repository'
 import { ILike, In, Repository } from 'typeorm'
-import { Vehicle } from '../entities/vehicles.entity'
-import { dataSource } from '@/common/infrastructure/typeorm'
 import { NotFoundError } from '@/common/domain/errors/not-found-error'
 import { ConflictError } from '@/common/domain/errors/conflict-error'
+import { inject, injectable } from 'tsyringe'
+import { Vehicle } from '../entities/vehicles.entity'
 
+@injectable()
 export class VehiclesTypeOrmRepository implements VehiclesRepository {
   sortableFields: string[] = ['name', 'created_at']
-  vehiclesRepository: Repository<Vehicle>
 
-  constructor() {
-    this.vehiclesRepository = dataSource.getRepository(Vehicle)
-  }
+  constructor(
+    @inject('VehiclesDefaultTypeormRepository')
+    private vehiclesRepository: Repository<Vehicle>,
+  ) {}
 
   async findByName(name: string): Promise<VehicleModel> {
     const vehicle = await this.vehiclesRepository.findOneBy({ name })
