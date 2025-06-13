@@ -15,7 +15,7 @@ export namespace SearchVehicleUseCase {
   @injectable()
   export class UseCase {
     constructor(
-      @inject('VehiclesRepository')
+      @inject('VehicleRepository')
       private vehiclesRepository: VehiclesRepository,
     ) {}
 
