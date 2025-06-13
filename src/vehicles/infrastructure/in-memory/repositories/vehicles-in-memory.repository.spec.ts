@@ -1,7 +1,6 @@
 import { NotFoundError } from '@/common/domain/errors/not-found-error'
 import { VehiclesDataBuilder } from '../../testing/helpers/vehicles-data-builder'
 import { VehiclesInMemoryRepository } from './vehicles-in-memory.repository'
-import { ConflictError } from '@/common/domain/errors/conflict-error'
 
 describe('VehiclesInMemoryRepository unit tests', () => {
   let sut: VehiclesInMemoryRepository
@@ -25,25 +24,6 @@ describe('VehiclesInMemoryRepository unit tests', () => {
       sut.items.push(data)
       const result = await sut.findByName('Voyage')
       expect(result).toStrictEqual(data)
-    })
-  })
-
-  describe('conflictingName', () => {
-    it('should throw error when vehicle found', async () => {
-      const data = VehiclesDataBuilder({ name: 'Voyage' })
-      sut.items.push(data)
-
-      await expect(() => sut.conflictingName('Voyage')).rejects.toThrow(
-        new ConflictError('Name already used on another vehicle'),
-      )
-      await expect(() => sut.conflictingName('Voyage')).rejects.toBeInstanceOf(
-        ConflictError,
-      )
-    })
-
-    it('should not find a vehicle by name', async () => {
-      expect.assertions(0)
-      await sut.conflictingName('Voyage')
     })
   })
 

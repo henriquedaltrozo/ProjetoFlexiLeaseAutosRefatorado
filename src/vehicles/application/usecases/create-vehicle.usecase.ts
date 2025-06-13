@@ -32,8 +32,6 @@ export namespace CreateVehicleUseCase {
         throw new BadRequestError('Input data not provided or invalid')
       }
 
-      await this.vehiclesRepository.conflictingName(input.name)
-
       const vehicle = this.vehiclesRepository.create(input)
       const createdVehicle: VehicleOutput =
         await this.vehiclesRepository.insert(vehicle)

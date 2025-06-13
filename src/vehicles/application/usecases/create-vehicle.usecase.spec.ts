@@ -1,4 +1,3 @@
-import { ConflictError } from '@/common/domain/errors/conflict-error'
 import { BadRequestError } from '@/common/domain/errors/bad-request-error'
 import { VehiclesRepository } from '@/vehicles/domain/repositories/vehicles.repository'
 import { CreateVehicleUseCase } from './create-vehicle.usecase'
@@ -30,19 +29,6 @@ describe('CreateVehicleUseCase Unit Tests', () => {
     expect(result.updated_at).toBeInstanceOf(Date)
     expect(result.name).toBe('Carro A')
     expect(spyInsert).toHaveBeenCalledTimes(1)
-  })
-
-  it('should not allow creating a vehicle with an existing name', async () => {
-    const props = {
-      name: 'Vehicle 1',
-      color: 'Blue',
-      year: 2023,
-      value_per_day: 200,
-      number_of_passengers: 5,
-    }
-
-    await sut.execute(props)
-    await expect(sut.execute(props)).rejects.toBeInstanceOf(ConflictError)
   })
 
   it('should throw error if name is missing', async () => {

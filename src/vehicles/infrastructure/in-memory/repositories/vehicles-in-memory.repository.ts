@@ -1,4 +1,3 @@
-import { ConflictError } from '@/common/domain/errors/conflict-error'
 import { NotFoundError } from '@/common/domain/errors/not-found-error'
 import { InMemoryRepository } from '@/common/domain/repositories/in-memory.repository'
 import { VehicleModel } from '@/vehicles/domain/models/vehicles.model'
@@ -30,13 +29,6 @@ export class VehiclesInMemoryRepository
       }
     }
     return existingVehicles
-  }
-
-  async conflictingName(name: string): Promise<void> {
-    const vehicle = this.items.find(item => item.name === name)
-    if (vehicle) {
-      throw new ConflictError(`Name already used on another vehicle`)
-    }
   }
 
   protected async applyFilter(

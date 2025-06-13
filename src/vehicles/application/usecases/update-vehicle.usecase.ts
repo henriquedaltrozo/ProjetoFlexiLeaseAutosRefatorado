@@ -25,9 +25,6 @@ export namespace UpdateVehicleUseCase {
       const vehicle = await this.vehiclesRepository.findById(input.id)
 
       if (input.name) {
-        if (vehicle.name !== input.name) {
-          await this.vehiclesRepository.conflictingName(input.name)
-        }
         vehicle.name = input.name
       }
 

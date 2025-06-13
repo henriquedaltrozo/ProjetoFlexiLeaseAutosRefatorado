@@ -4,7 +4,6 @@ import { randomUUID } from 'crypto'
 import { VehiclesTypeOrmRepository } from './vehicles-typeorm.repository'
 import { Vehicle } from '../entities/vehicles.entity'
 import { VehiclesDataBuilder } from '../../testing/helpers/vehicles-data-builder'
-import { ConflictError } from '@/common/domain/errors/conflict-error'
 import { VehicleModel } from '@/vehicles/domain/models/vehicles.model'
 
 describe('VehiclesTypeormRepository integration tests', () => {
@@ -118,18 +117,6 @@ describe('VehiclesTypeormRepository integration tests', () => {
 
       const result = await ormRepository.findByName(data.name)
       expect(result.name).toEqual('Vehicle 1')
-    })
-  })
-
-  describe('conflictingName', () => {
-    it('should generate an error when the vehicle found', async () => {
-      const data = VehiclesDataBuilder({ name: 'Vehicle 1' })
-      const vehicle = testDataSource.manager.create(Vehicle, data)
-      await testDataSource.manager.save(vehicle)
-
-      await expect(ormRepository.conflictingName('Vehicle 1')).rejects.toThrow(
-        new ConflictError(`Name already used by another vehicle`),
-      )
     })
   })
 
