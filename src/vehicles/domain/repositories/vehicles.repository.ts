@@ -20,5 +20,4 @@ export interface VehiclesRepository
   extends RepositoryInterface<VehicleModel, CreateVehicleProps> {
   findByName(name: string): Promise<VehicleModel>
   findAllByIds(vehicleIds: VehicleId[]): Promise<VehicleModel[]>
-  conflictingName(name: string): Promise<void>
 }

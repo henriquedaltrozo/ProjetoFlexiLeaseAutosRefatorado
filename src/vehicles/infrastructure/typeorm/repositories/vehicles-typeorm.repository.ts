@@ -10,7 +10,6 @@ import {
 } from '@/vehicles/domain/repositories/vehicles.repository'
 import { ILike, In, Repository } from 'typeorm'
 import { NotFoundError } from '@/common/domain/errors/not-found-error'
-import { ConflictError } from '@/common/domain/errors/conflict-error'
 import { inject, injectable } from 'tsyringe'
 import { Vehicle } from '../entities/vehicles.entity'
 
@@ -37,13 +36,6 @@ export class VehiclesTypeOrmRepository implements VehiclesRepository {
       where: { id: In(ids) },
     })
     return productsFound
-  }
-
-  async conflictingName(name: string): Promise<void> {
-    const vehicle = await this.vehiclesRepository.findOneBy({ name })
-    if (vehicle) {
-      throw new ConflictError(`Name already used by another vehicle`)
-    }
   }
 
   create(props: CreateVehicleProps): VehicleModel {
