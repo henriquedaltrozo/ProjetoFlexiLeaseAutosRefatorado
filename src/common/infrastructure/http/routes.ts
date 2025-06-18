@@ -1,5 +1,6 @@
-import { vehiclesRouter } from '@/vehicles/infrastructure/http/routes/vehicles.route'
 import { Router } from 'express'
+import { vehiclesRouter } from '@/vehicles/infrastructure/http/routes/vehicles.route'
+import { usersRouter } from '@/users/infrastructure/http/routes/users.route'
 
 const routes = Router()
 
@@ -8,5 +9,6 @@ routes.get('/', (req, res) => {
 })
 
 routes.use('/vehicles', vehiclesRouter)
+routes.use('/users', usersRouter)
 
 export { routes }
