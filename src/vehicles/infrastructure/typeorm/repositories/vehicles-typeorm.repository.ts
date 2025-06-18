@@ -70,7 +70,7 @@ export class VehiclesTypeOrmRepository implements VehiclesRepository {
     const orderByDir = validSortDir ? props.sort_dir : 'desc'
 
     const [vehicles, total] = await this.vehiclesRepository.findAndCount({
-      ...(props.filter && { where: { name: ILike(props.filter) } }),
+      ...(props.filter && { where: { name: ILike(`%${props.filter}%`) } }),
       order: { [orderByField]: orderByDir },
       skip: (props.page - 1) * props.per_page,
       take: props.per_page,
