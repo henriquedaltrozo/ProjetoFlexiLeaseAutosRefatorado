@@ -32,10 +32,10 @@ export class VehiclesTypeOrmRepository implements VehiclesRepository {
 
   async findAllByIds(vehicleIds: VehicleId[]): Promise<VehicleModel[]> {
     const ids = vehicleIds.map(vehicleId => vehicleId.id)
-    const productsFound = await this.vehiclesRepository.find({
+    const vehiclesFound = await this.vehiclesRepository.find({
       where: { id: In(ids) },
     })
-    return productsFound
+    return vehiclesFound
   }
 
   create(props: CreateVehicleProps): VehicleModel {
