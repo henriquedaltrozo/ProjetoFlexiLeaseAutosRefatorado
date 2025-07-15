@@ -7,6 +7,13 @@ export type CreateUserProps = {
   password: string
 }
 
+export type UpdateUserProps = {
+  id: string
+  name?: string
+  email?: string
+  password?: string
+}
+
 export interface UsersRepository
   extends RepositoryInterface<UserModel, CreateUserProps> {
   findByEmail(email: string): Promise<UserModel>
