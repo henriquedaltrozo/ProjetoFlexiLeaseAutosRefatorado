@@ -1,11 +1,11 @@
 import { inject, injectable } from 'tsyringe'
 import { UserModel } from '@/users/domain/models/users.model'
 import { UsersRepository } from '@/users/domain/repositories/users.repository'
-import { SearchInputDto } from '@/vehicles/application/dtos/search-input.dto'
+import { SearchInputDto } from '../dtos/search-input.dto'
 import {
   PaginationOutputDto,
   PaginationOutputMapper,
-} from '@/vehicles/application/dtos/pagination-output.dto'
+} from '../dtos/pagination-output.dto'
 
 export namespace SearchUserUseCase {
   export type Input = SearchInputDto
