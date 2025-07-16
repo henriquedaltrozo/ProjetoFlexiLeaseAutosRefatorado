@@ -1,6 +1,7 @@
 import { container } from 'tsyringe'
 import '@/vehicles/infrastructure/container'
 import '@/users/infrastructure/container'
+import '@/reserves/infrastructure/container'
 import { BcryptjsHashProvider } from '../providers/hash-provider/bcryptjs-hash.provider'
 import { JwtAuthProvider } from '../providers/auth-provider/auth-provider.jwt'
 
