@@ -6,10 +6,6 @@ import { reservesRouter } from '@/reserves/infrastructure/http/routes/reserves.r
 
 const routes = Router()
 
-routes.get('/', (req, res) => {
-  return res.status(200).json({ message: 'Olá Dev!' })
-})
-
 routes.use('/vehicles', vehiclesRouter)
 routes.use('/auth', authRouter)
 routes.use('/users', usersRouter)
