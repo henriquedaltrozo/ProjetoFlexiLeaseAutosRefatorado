@@ -11,11 +11,11 @@ export async function createReserveController(
   const bodySchema = z.object({
     start_date: z.string(),
     end_date: z.string(),
-    id_car: z.string(),
+    id_vehicle: z.string(),
     id_user: z.string(),
   })
 
-  const { start_date, end_date, id_car, id_user } = dataValidation(
+  const { start_date, end_date, id_vehicle, id_user } = dataValidation(
     bodySchema,
     request.body,
   )
@@ -27,7 +27,7 @@ export async function createReserveController(
   const reserve = await createReserveUseCase.execute({
     start_date,
     end_date,
-    id_car,
+    id_vehicle,
     id_user,
   })
 

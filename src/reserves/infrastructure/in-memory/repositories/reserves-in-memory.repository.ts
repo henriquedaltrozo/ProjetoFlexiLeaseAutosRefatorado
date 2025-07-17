@@ -12,18 +12,18 @@ export class ReservesInMemoryRepository
     return this.items.filter(reserve => reserve.id_user === id_user)
   }
 
-  async findByVehicle(id_car: string): Promise<ReserveModel[]> {
-    return this.items.filter(reserve => reserve.id_car === id_car)
+  async findByVehicle(id_vehicle: string): Promise<ReserveModel[]> {
+    return this.items.filter(reserve => reserve.id_vehicle === id_vehicle)
   }
 
   async findConflictingReserve(
-    id_car: string,
+    id_vehicle: string,
     start_date: Date,
     end_date: Date,
   ): Promise<ReserveModel | null> {
     const conflictingReserve = this.items.find(reserve => {
       return (
-        reserve.id_car === id_car &&
+        reserve.id_vehicle === id_vehicle &&
         ((start_date >= reserve.start_date && start_date < reserve.end_date) ||
           (end_date > reserve.start_date && end_date <= reserve.end_date) ||
           (start_date <= reserve.start_date && end_date >= reserve.end_date))
@@ -44,7 +44,7 @@ export class ReservesInMemoryRepository
     return items.filter(reserve => {
       return (
         reserve.id_user.toLowerCase().includes(filter.toLowerCase()) ||
-        reserve.id_car.toLowerCase().includes(filter.toLowerCase())
+        reserve.id_vehicle.toLowerCase().includes(filter.toLowerCase())
       )
     })
   }
