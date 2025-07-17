@@ -33,12 +33,11 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     await usersRepository.insert(user)
 
     const vehicle = vehiclesRepository.create({
-      model: 'Test Car',
-      brand: 'Test Brand',
-      year: 2023,
-      license_plate: 'ABC1234',
+      name: 'Test Car',
       color: 'Blue',
-      category: 'Economy',
+      year: 2023,
+      value_per_day: 100,
+      number_of_passengers: 4,
     })
     await vehiclesRepository.insert(vehicle)
 
@@ -141,12 +140,11 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     await usersRepository.insert(user)
 
     const vehicle = vehiclesRepository.create({
-      model: 'Test Car',
-      brand: 'Test Brand',
-      year: 2023,
-      license_plate: 'ABC1234',
+      name: 'Test Car',
       color: 'Blue',
-      category: 'Economy',
+      year: 2023,
+      value_per_day: 100,
+      number_of_passengers: 4,
     })
     await vehiclesRepository.insert(vehicle)
 
