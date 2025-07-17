@@ -68,7 +68,7 @@ export class CreateReserves1752628839022 implements MigrationInterface {
             columnNames: ['end_date'],
           },
           {
-            name: 'IDX_reserves_id_car',
+            name: 'IDX_reserves_id_vehicle',
             columnNames: ['id_vehicle'],
           },
           {
