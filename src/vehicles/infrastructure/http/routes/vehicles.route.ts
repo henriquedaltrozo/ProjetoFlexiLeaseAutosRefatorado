@@ -4,6 +4,7 @@ import { getVehicleController } from '../controllers/get-vehicle.controller'
 import { updateVehicleController } from '../controllers/update-vehicle.controller'
 import { deleteVehicleController } from '../controllers/delete-vehicle.controller'
 import { searchVehicleController } from '../controllers/search-vehicle.controller'
+import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuthenticated'
 
 /**
  * @swagger
@@ -180,6 +181,7 @@ import { searchVehicleController } from '../controllers/search-vehicle.controlle
 
 const vehiclesRouter = Router()
 
+vehiclesRouter.use(isAuthenticated)
 vehiclesRouter.post('/', createVehicleController)
 vehiclesRouter.get('/:id', getVehicleController)
 vehiclesRouter.put('/:id', updateVehicleController)
