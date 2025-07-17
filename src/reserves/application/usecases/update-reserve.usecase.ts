@@ -63,10 +63,10 @@ export namespace UpdateReserveUseCase {
         updateData.end_date ||
         updateData.id_vehicle
       ) {
-        const carId = updateData.id_vehicle || reserve.id_vehicle
+        const vehicleId = updateData.id_vehicle || reserve.id_vehicle
         const conflictingReserve =
           await this.reservesRepository.findConflictingReserve(
-            carId,
+            vehicleId,
             startDate,
             endDate,
           )
