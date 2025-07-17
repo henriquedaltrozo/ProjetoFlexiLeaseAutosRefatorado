@@ -148,7 +148,7 @@ describe('UsersInMemoryRepository Unit Tests', () => {
       ]
       sut.items = items
 
-      let sortedItems = await sut['applySort'](sut.items, 'e+mail', 'asc')
+      let sortedItems = await sut['applySort'](sut.items, 'email', 'asc')
       expect(sortedItems).toStrictEqual([
         sut.items[2],
         sut.items[1],
