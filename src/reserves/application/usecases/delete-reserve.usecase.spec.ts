@@ -20,7 +20,7 @@ describe('DeleteReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: 'car-id',
+      id_vehicle: 'vehicle-id',
       id_user: 'user-id',
     })
     await reservesRepository.insert(reserve)

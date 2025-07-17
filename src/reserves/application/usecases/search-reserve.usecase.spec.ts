@@ -20,7 +20,7 @@ describe('SearchReserveUseCase Unit Tests', () => {
       const reserve = reservesRepository.create({
         start_date: tomorrow,
         end_date: dayAfterTomorrow,
-        id_vehicle: `car-id-${i}`,
+        id_vehicle: `vehicle-id-${i}`,
         id_user: `user-id-${i}`,
       })
       await reservesRepository.insert(reserve)
@@ -47,7 +47,7 @@ describe('SearchReserveUseCase Unit Tests', () => {
       const reserve = reservesRepository.create({
         start_date: tomorrow,
         end_date: dayAfterTomorrow,
-        id_vehicle: `car-id-${i}`,
+        id_vehicle: `vehicle-id-${i}`,
         id_user: userIds[i],
       })
       await reservesRepository.insert(reserve)
@@ -76,7 +76,7 @@ describe('SearchReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: 'car-id',
+      id_vehicle: 'vehicle-id',
       id_user: 'user-id',
     })
     await reservesRepository.insert(reserve)
@@ -101,7 +101,7 @@ describe('SearchReserveUseCase Unit Tests', () => {
       const reserve = reservesRepository.create({
         start_date: tomorrow,
         end_date: dayAfterTomorrow,
-        id_vehicle: `car-id-${i}`,
+        id_vehicle: `vehicle-id-${i}`,
         id_user: `user-id-${i}`,
       })
       await reservesRepository.insert(reserve)

@@ -11,20 +11,44 @@ describe('UsersTypeormRepository integration tests', () => {
   let ormRepository: UsersTypeormRepository
   let typeormEntityManager: any
 
+  const cleanDatabase = async () => {
+    try {
+      await testDataSource.manager.query('DELETE FROM reserves')
+    } catch (error) {
+      console.warn('Failed to delete reserves:', error)
+    }
+    try {
+      await testDataSource.manager.query('DELETE FROM vehicles')
+    } catch (error) {
+      console.warn('Failed to delete vehicles:', error)
+    }
+    try {
+      await testDataSource.manager.query('DELETE FROM users')
+    } catch (error) {
+      console.warn('Failed to delete users:', error)
+    }
+  }
+
   beforeAll(async () => {
     await testDataSource.initialize()
     typeormEntityManager = testDataSource.createEntityManager()
+    await cleanDatabase()
   })
 
   afterAll(async () => {
+    await cleanDatabase()
     await testDataSource.destroy()
   })
 
   beforeEach(async () => {
-    await testDataSource.manager.query('DELETE FROM users')
+    await cleanDatabase()
     ormRepository = new UsersTypeormRepository(
       typeormEntityManager.getRepository(User),
     )
+  })
+
+  afterEach(async () => {
+    await cleanDatabase()
   })
 
   describe('findById', () => {

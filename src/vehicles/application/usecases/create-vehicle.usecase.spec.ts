@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { BadRequestError } from '@/common/domain/errors/bad-request-error'
 import { VehiclesRepository } from '@/vehicles/domain/repositories/vehicles.repository'
 import { CreateVehicleUseCase } from './create-vehicle.usecase'
@@ -27,7 +28,7 @@ describe('CreateVehicleUseCase Unit Tests', () => {
     expect(result.id).toBeDefined()
     expect(result.created_at).toBeInstanceOf(Date)
     expect(result.updated_at).toBeInstanceOf(Date)
-    expect(result.name).toBe('Carro A')
+    expect(result.name).toBe('Vehicle 1')
     expect(spyInsert).toHaveBeenCalledTimes(1)
   })
 

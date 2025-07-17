@@ -93,9 +93,9 @@ export class ReservesTypeormRepository implements ReservesRepository {
 
     return {
       items: reserves,
-      per_page: props.per_page,
       total,
       current_page: props.page,
+      per_page: props.per_page,
       sort: props.sort,
       sort_dir: props.sort_dir,
       filter: props.filter,

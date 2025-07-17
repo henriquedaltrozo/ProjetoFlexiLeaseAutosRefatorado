@@ -33,12 +33,11 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     await usersRepository.insert(user)
 
     const vehicle = vehiclesRepository.create({
-      model: 'Test Car',
-      brand: 'Test Brand',
-      year: 2023,
-      license_plate: 'ABC1234',
+      name: 'Test Car',
       color: 'Blue',
-      category: 'Economy',
+      year: 2023,
+      value_per_day: 100,
+      number_of_passengers: 4,
     })
     await vehiclesRepository.insert(vehicle)
 
@@ -74,7 +73,7 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: 'non-existent-id',
         start_date: tomorrow.toISOString(),
         end_date: dayAfterTomorrow.toISOString(),
-        id_vehicle: 'car-id',
+        id_vehicle: 'vehicle-id',
         id_user: 'user-id',
       }),
     ).rejects.toThrow(
@@ -89,7 +88,7 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: new Date(Date.now() + 48 * 60 * 60 * 1000),
-      id_vehicle: 'car-id',
+      id_vehicle: 'vehicle-id',
       id_user: 'user-id',
     })
     await reservesRepository.insert(reserve)
@@ -99,7 +98,7 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: reserve.id,
         start_date: yesterday.toISOString(),
         end_date: tomorrow.toISOString(),
-        id_vehicle: 'car-id',
+        id_vehicle: 'vehicle-id',
         id_user: 'user-id',
       }),
     ).rejects.toThrow(new BadRequestError('Start date cannot be in the past'))
@@ -112,7 +111,7 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: 'car-id',
+      id_vehicle: 'vehicle-id',
       id_user: 'user-id',
     })
     await reservesRepository.insert(reserve)
@@ -122,7 +121,7 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: reserve.id,
         start_date: dayAfterTomorrow.toISOString(),
         end_date: tomorrow.toISOString(),
-        id_vehicle: 'car-id',
+        id_vehicle: 'vehicle-id',
         id_user: 'user-id',
       }),
     ).rejects.toThrow(new BadRequestError('Start date must be before end date'))
@@ -141,12 +140,11 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     await usersRepository.insert(user)
 
     const vehicle = vehiclesRepository.create({
-      model: 'Test Car',
-      brand: 'Test Brand',
-      year: 2023,
-      license_plate: 'ABC1234',
+      name: 'Test Car',
       color: 'Blue',
-      category: 'Economy',
+      year: 2023,
+      value_per_day: 100,
+      number_of_passengers: 4,
     })
     await vehiclesRepository.insert(vehicle)
 
