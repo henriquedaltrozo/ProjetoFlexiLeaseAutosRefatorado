@@ -21,7 +21,11 @@ export namespace SearchUserUseCase {
 
     async execute(input: Input): Promise<Output> {
       const searchResult = await this.usersRepository.search(input)
-      return PaginationOutputMapper.toOutput(searchResult.items, searchResult)
+      return PaginationOutputMapper.toOutput(searchResult.items, {
+        total: searchResult.total,
+        current_page: searchResult.current_page,
+        per_page: searchResult.per_page,
+      })
     }
   }
 }
