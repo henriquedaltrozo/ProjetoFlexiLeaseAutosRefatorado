@@ -46,7 +46,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: dayAfterTomorrow.toISOString(),
-      id_car: vehicle.id,
+      id_vehicle: vehicle.id,
       id_user: user.id,
     }
 
@@ -55,7 +55,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     expect(output.id).toBeDefined()
     expect(output.start_date).toEqual(tomorrow)
     expect(output.end_date).toEqual(dayAfterTomorrow)
-    expect(output.id_car).toBe(vehicle.id)
+    expect(output.id_vehicle).toBe(vehicle.id)
     expect(output.id_user).toBe(user.id)
   })
 
@@ -63,7 +63,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const input: CreateReserveUseCase.Input = {
       start_date: '',
       end_date: '',
-      id_car: '',
+      id_vehicle: '',
       id_user: '',
     }
 
@@ -93,7 +93,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: today.toISOString(),
-      id_car: vehicle.id,
+      id_vehicle: vehicle.id,
       id_user: user.id,
     }
 
@@ -124,7 +124,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const existingReserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_car: vehicle.id,
+      id_vehicle: vehicle.id,
       id_user: user.id,
     })
     await reservesRepository.insert(existingReserve)
@@ -133,7 +133,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: dayAfterTomorrow.toISOString(),
-      id_car: vehicle.id,
+      id_vehicle: vehicle.id,
       id_user: user.id,
     }
 

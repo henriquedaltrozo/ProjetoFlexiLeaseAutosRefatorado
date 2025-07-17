@@ -10,7 +10,7 @@ export namespace CreateReserveUseCase {
   export type Input = {
     start_date: string
     end_date: string
-    id_car: string
+    id_vehicle: string
     id_user: string
   }
 
@@ -31,7 +31,7 @@ export namespace CreateReserveUseCase {
       if (
         !input.start_date ||
         !input.end_date ||
-        !input.id_car ||
+        !input.id_vehicle ||
         !input.id_user
       ) {
         throw new BadRequestError('Input data not provided or invalid')
@@ -52,12 +52,12 @@ export namespace CreateReserveUseCase {
       await this.usersRepository.findById(input.id_user)
 
       // Verify if vehicle exists
-      await this.vehiclesRepository.findById(input.id_car)
+      await this.vehiclesRepository.findById(input.id_vehicle)
 
       // Check for conflicting reservations
       const conflictingReserve =
         await this.reservesRepository.findConflictingReserve(
-          input.id_car,
+          input.id_vehicle,
           startDate,
           endDate,
         )
@@ -71,7 +71,7 @@ export namespace CreateReserveUseCase {
       const reserve = this.reservesRepository.create({
         start_date: startDate,
         end_date: endDate,
-        id_car: input.id_car,
+        id_vehicle: input.id_vehicle,
         id_user: input.id_user,
       })
 

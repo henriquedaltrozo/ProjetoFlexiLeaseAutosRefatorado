@@ -22,7 +22,7 @@ export class CreateReserves1752628839022 implements MigrationInterface {
             type: 'timestamp',
           },
           {
-            name: 'id_car',
+            name: 'id_vehicle',
             type: 'uuid',
           },
           {
@@ -43,7 +43,7 @@ export class CreateReserves1752628839022 implements MigrationInterface {
         foreignKeys: [
           {
             name: 'FK_reserves_vehicles',
-            columnNames: ['id_car'],
+            columnNames: ['id_vehicle'],
             referencedTableName: 'vehicles',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
@@ -69,7 +69,7 @@ export class CreateReserves1752628839022 implements MigrationInterface {
           },
           {
             name: 'IDX_reserves_id_car',
-            columnNames: ['id_car'],
+            columnNames: ['id_vehicle'],
           },
           {
             name: 'IDX_reserves_id_user',
