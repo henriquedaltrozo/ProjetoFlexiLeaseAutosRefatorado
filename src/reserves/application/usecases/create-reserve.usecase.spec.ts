@@ -120,7 +120,6 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
     const dayAfterTomorrow = new Date(Date.now() + 48 * 60 * 60 * 1000)
 
-    // Create first reservation
     const existingReserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
@@ -129,7 +128,6 @@ describe('CreateReserveUseCase Unit Tests', () => {
     })
     await reservesRepository.insert(existingReserve)
 
-    // Try to create conflicting reservation
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: dayAfterTomorrow.toISOString(),

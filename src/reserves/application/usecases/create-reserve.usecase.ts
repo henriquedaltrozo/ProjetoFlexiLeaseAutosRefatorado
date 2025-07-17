@@ -48,13 +48,10 @@ export namespace CreateReserveUseCase {
         throw new BadRequestError('Start date cannot be in the past')
       }
 
-      // Verify if user exists
       await this.usersRepository.findById(input.id_user)
 
-      // Verify if vehicle exists
       await this.vehiclesRepository.findById(input.id_vehicle)
 
-      // Check for conflicting reservations
       const conflictingReserve =
         await this.reservesRepository.findConflictingReserve(
           input.id_vehicle,

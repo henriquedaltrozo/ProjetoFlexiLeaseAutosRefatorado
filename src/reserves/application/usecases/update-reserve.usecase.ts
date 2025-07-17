@@ -47,7 +47,6 @@ export namespace UpdateReserveUseCase {
         updateData.id_user = input.id_user
       }
 
-      // Check date validation if dates are being updated
       const startDate = updateData.start_date || reserve.start_date
       const endDate = updateData.end_date || reserve.end_date
 
@@ -59,8 +58,11 @@ export namespace UpdateReserveUseCase {
         throw new BadRequestError('Start date cannot be in the past')
       }
 
-      // Check for conflicting reservations if car or dates are being updated
-      if (updateData.start_date || updateData.end_date || updateData.id_vehicle) {
+      if (
+        updateData.start_date ||
+        updateData.end_date ||
+        updateData.id_vehicle
+      ) {
         const carId = updateData.id_vehicle || reserve.id_vehicle
         const conflictingReserve =
           await this.reservesRepository.findConflictingReserve(
