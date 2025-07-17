@@ -23,35 +23,6 @@ const options: swaggerJSDoc.Options = {
         },
       },
       schemas: {
-        User: {
-          type: 'object',
-          properties: {
-            id: {
-              type: 'string',
-              format: 'uuid',
-              description: 'ID único do usuário',
-            },
-            name: {
-              type: 'string',
-              description: 'Nome do usuário',
-            },
-            email: {
-              type: 'string',
-              format: 'email',
-              description: 'Email do usuário',
-            },
-            created_at: {
-              type: 'string',
-              format: 'date-time',
-              description: 'Data de criação',
-            },
-            updated_at: {
-              type: 'string',
-              format: 'date-time',
-              description: 'Data de atualização',
-            },
-          },
-        },
         UserInput: {
           type: 'object',
           required: ['name', 'email', 'password'],
@@ -72,9 +43,14 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
-        UserUpdate: {
+        UserOutput: {
           type: 'object',
           properties: {
+            id: {
+              type: 'string',
+              format: 'uuid',
+              description: 'ID único do usuário',
+            },
             name: {
               type: 'string',
               description: 'Nome do usuário',
@@ -83,42 +59,6 @@ const options: swaggerJSDoc.Options = {
               type: 'string',
               format: 'email',
               description: 'Email do usuário',
-            },
-            password: {
-              type: 'string',
-              minLength: 6,
-              description: 'Senha do usuário',
-            },
-          },
-        },
-        Vehicle: {
-          type: 'object',
-          properties: {
-            id: {
-              type: 'string',
-              format: 'uuid',
-              description: 'ID único do veículo',
-            },
-            name: {
-              type: 'string',
-              description: 'Nome/modelo do veículo',
-            },
-            color: {
-              type: 'string',
-              description: 'Cor do veículo',
-            },
-            year: {
-              type: 'integer',
-              description: 'Ano do veículo',
-            },
-            value_per_day: {
-              type: 'number',
-              format: 'float',
-              description: 'Valor por dia de locação',
-            },
-            number_of_passengers: {
-              type: 'integer',
-              description: 'Número de passageiros',
             },
             created_at: {
               type: 'string',
@@ -165,7 +105,74 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
-        Reserve: {
+        VehicleOutput: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+              format: 'uuid',
+              description: 'ID único do veículo',
+            },
+            name: {
+              type: 'string',
+              description: 'Nome/modelo do veículo',
+            },
+            color: {
+              type: 'string',
+              description: 'Cor do veículo',
+            },
+            year: {
+              type: 'integer',
+              description: 'Ano do veículo',
+            },
+            value_per_day: {
+              type: 'number',
+              format: 'float',
+              description: 'Valor por dia de locação',
+            },
+            number_of_passengers: {
+              type: 'integer',
+              description: 'Número de passageiros',
+            },
+            created_at: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Data de criação',
+            },
+            updated_at: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Data de atualização',
+            },
+          },
+        },
+        ReserveInput: {
+          type: 'object',
+          required: ['start_date', 'end_date', 'id_car', 'id_user'],
+          properties: {
+            start_date: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Data de início da reserva',
+            },
+            end_date: {
+              type: 'string',
+              format: 'date-time',
+              description: 'Data de fim da reserva',
+            },
+            id_car: {
+              type: 'string',
+              format: 'uuid',
+              description: 'ID do veículo a ser reservado',
+            },
+            id_user: {
+              type: 'string',
+              format: 'uuid',
+              description: 'ID do usuário que fez a reserva',
+            },
+          },
+        },
+        ReserveOutput: {
           type: 'object',
           properties: {
             id: {
@@ -205,27 +212,6 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
-        ReserveInput: {
-          type: 'object',
-          required: ['start_date', 'end_date', 'id_car'],
-          properties: {
-            start_date: {
-              type: 'string',
-              format: 'date-time',
-              description: 'Data de início da reserva',
-            },
-            end_date: {
-              type: 'string',
-              format: 'date-time',
-              description: 'Data de fim da reserva',
-            },
-            id_car: {
-              type: 'string',
-              format: 'uuid',
-              description: 'ID do veículo a ser reservado',
-            },
-          },
-        },
         LoginInput: {
           type: 'object',
           required: ['email', 'password'],
@@ -241,43 +227,12 @@ const options: swaggerJSDoc.Options = {
             },
           },
         },
-        LoginResponse: {
+        LoginOutput: {
           type: 'object',
           properties: {
-            token: {
+            access_token: {
               type: 'string',
               description: 'Token JWT para autenticação',
-            },
-            user: {
-              $ref: '#/components/schemas/User',
-            },
-          },
-        },
-        PaginationOutput: {
-          type: 'object',
-          properties: {
-            data: {
-              type: 'array',
-              items: {
-                type: 'object',
-              },
-            },
-            meta: {
-              type: 'object',
-              properties: {
-                current_page: {
-                  type: 'integer',
-                },
-                per_page: {
-                  type: 'integer',
-                },
-                last_page: {
-                  type: 'integer',
-                },
-                total: {
-                  type: 'integer',
-                },
-              },
             },
           },
         },
