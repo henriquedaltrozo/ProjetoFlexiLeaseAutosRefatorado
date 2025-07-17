@@ -27,7 +27,7 @@ describe('CreateVehicleUseCase Unit Tests', () => {
     expect(result.id).toBeDefined()
     expect(result.created_at).toBeInstanceOf(Date)
     expect(result.updated_at).toBeInstanceOf(Date)
-    expect(result.name).toBe('Carro A')
+    expect(result.name).toBe('Vehicle 1')
     expect(spyInsert).toHaveBeenCalledTimes(1)
   })
 
