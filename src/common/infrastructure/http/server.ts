@@ -7,8 +7,8 @@ dataSource
   .initialize()
   .then(() => {
     app.listen(env.PORT, () => {
-      console.log(`Server running on port ${env.PORT}! 🏆`)
-      console.log('API docs available at GET /docs 📚')
+      console.log(`Server running on port ${env.PORT}!`)
+      console.log(`API docs available at /docs`)
     })
   })
   .catch(error => {
