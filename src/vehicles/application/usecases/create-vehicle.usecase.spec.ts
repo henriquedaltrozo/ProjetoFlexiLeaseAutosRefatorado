@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { BadRequestError } from '@/common/domain/errors/bad-request-error'
 import { VehiclesRepository } from '@/vehicles/domain/repositories/vehicles.repository'
 import { CreateVehicleUseCase } from './create-vehicle.usecase'
