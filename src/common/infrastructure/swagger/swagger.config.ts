@@ -14,6 +14,24 @@ const options: swaggerJSDoc.Options = {
         description: 'Servidor de Desenvolvimento',
       },
     ],
+    tags: [
+      {
+        name: 'Authentication',
+        description: 'Autenticação de usuários',
+      },
+      {
+        name: 'Users',
+        description: 'Gerenciamento de usuários',
+      },
+      {
+        name: 'Vehicles',
+        description: 'Gerenciamento de veículos',
+      },
+      {
+        name: 'Reserves',
+        description: 'Gerenciamento de reservas de veículos',
+      },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
