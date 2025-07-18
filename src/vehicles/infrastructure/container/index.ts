@@ -1,4 +1,4 @@
-import { dataSource } from '@/common/infrastructure/typeorm'
+import { dataSource } from '@/common/infrastructure/typeorm/data-source'
 import { CreateVehicleUseCase } from '@/vehicles/application/usecases/create-vehicle.usecase'
 import { DeleteVehicleUseCase } from '@/vehicles/application/usecases/delete-vehicle.usecase'
 import { GetVehicleUseCase } from '@/vehicles/application/usecases/get-vehicle.usecase'

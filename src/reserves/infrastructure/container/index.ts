@@ -1,4 +1,4 @@
-import { dataSource } from '@/common/infrastructure/typeorm'
+import { dataSource } from '@/common/infrastructure/typeorm/data-source'
 import { ReservesTypeormRepository } from '@/reserves/infrastructure/typeorm/repositories/reserves-typeorm.repository'
 import { container } from 'tsyringe'
 import { Reserve } from '../typeorm/entities/reserves.entity'

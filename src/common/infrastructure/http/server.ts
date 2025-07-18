@@ -1,5 +1,5 @@
 import { env } from '../env'
-import { dataSource } from '../typeorm'
+import { dataSource } from '../typeorm/data-source'
 import { app } from './app'
 import '@/common/infrastructure/container'
 
