@@ -21,29 +21,29 @@ export class ReservesTypeormRepository implements ReservesRepository {
     private reservesRepository: Repository<Reserve>,
   ) {}
 
-  async findByUser(id_user: string): Promise<ReserveModel[]> {
+  async findByUser(user_id: string): Promise<ReserveModel[]> {
     return await this.reservesRepository.find({
-      where: { id_user },
+      where: { user_id },
       order: { start_date: 'ASC' },
     })
   }
 
-  async findByVehicle(id_vehicle: string): Promise<ReserveModel[]> {
+  async findByVehicle(vehicle_id: string): Promise<ReserveModel[]> {
     return await this.reservesRepository.find({
-      where: { id_vehicle },
+      where: { vehicle_id },
       order: { start_date: 'ASC' },
     })
   }
 
   async findConflictingReserve(
-    id_vehicle: string,
+    vehicle_id: string,
     start_date: Date,
     end_date: Date,
   ): Promise<ReserveModel | null> {
     const reserve = await this.reservesRepository.findOne({
       where: [
         {
-          id_vehicle,
+          vehicle_id,
           start_date: LessThanOrEqual(end_date),
           end_date: MoreThanOrEqual(start_date),
         },

@@ -9,8 +9,8 @@ export namespace UpdateReserveUseCase {
     id: string
     start_date?: string
     end_date?: string
-    id_vehicle?: string
-    id_user?: string
+    vehicle_id?: string
+    user_id?: string
   }
 
   export type Output = ReserveOutput
@@ -39,12 +39,12 @@ export namespace UpdateReserveUseCase {
         updateData.end_date = new Date(input.end_date)
       }
 
-      if (input.id_vehicle) {
-        updateData.id_vehicle = input.id_vehicle
+      if (input.vehicle_id) {
+        updateData.vehicle_id = input.vehicle_id
       }
 
-      if (input.id_user) {
-        updateData.id_user = input.id_user
+      if (input.user_id) {
+        updateData.user_id = input.user_id
       }
 
       const startDate = updateData.start_date || reserve.start_date
@@ -61,9 +61,9 @@ export namespace UpdateReserveUseCase {
       if (
         updateData.start_date ||
         updateData.end_date ||
-        updateData.id_vehicle
+        updateData.vehicle_id
       ) {
-        const vehicleId = updateData.id_vehicle || reserve.id_vehicle
+        const vehicleId = updateData.vehicle_id || reserve.vehicle_id
         const conflictingReserve =
           await this.reservesRepository.findConflictingReserve(
             vehicleId,

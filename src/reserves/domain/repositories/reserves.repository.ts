@@ -4,24 +4,24 @@ import { ReserveModel } from '../models/reserves.model'
 export type CreateReserveProps = {
   start_date: Date
   end_date: Date
-  id_vehicle: string
-  id_user: string
+  vehicle_id: string
+  user_id: string
 }
 
 export type UpdateReserveProps = {
   id: string
   start_date?: Date
   end_date?: Date
-  id_vehicle?: string
-  id_user?: string
+  vehicle_id?: string
+  user_id?: string
 }
 
 export interface ReservesRepository
   extends RepositoryInterface<ReserveModel, CreateReserveProps> {
-  findByUser(id_user: string): Promise<ReserveModel[]>
-  findByVehicle(id_vehicle: string): Promise<ReserveModel[]>
+  findByUser(user_id: string): Promise<ReserveModel[]>
+  findByVehicle(vehicle_id: string): Promise<ReserveModel[]>
   findConflictingReserve(
-    id_vehicle: string,
+    vehicle_id: string,
     start_date: Date,
     end_date: Date,
   ): Promise<ReserveModel | null>

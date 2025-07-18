@@ -19,10 +19,10 @@ export class Reserve implements ReserveModel {
   end_date: Date
 
   @Column('uuid')
-  id_vehicle: string
+  vehicle_id: string
 
   @Column('uuid')
-  id_user: string
+  user_id: string
 
   @CreateDateColumn()
   created_at: Date

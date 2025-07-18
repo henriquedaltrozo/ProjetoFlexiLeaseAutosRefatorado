@@ -46,8 +46,8 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: dayAfterTomorrow.toISOString(),
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     }
 
     const output = await useCase.execute(input)
@@ -55,16 +55,16 @@ describe('CreateReserveUseCase Unit Tests', () => {
     expect(output.id).toBeDefined()
     expect(output.start_date).toEqual(tomorrow)
     expect(output.end_date).toEqual(dayAfterTomorrow)
-    expect(output.id_vehicle).toBe(vehicle.id)
-    expect(output.id_user).toBe(user.id)
+    expect(output.vehicle_id).toBe(vehicle.id)
+    expect(output.user_id).toBe(user.id)
   })
 
   it('should throw error when required data is not provided', async () => {
     const input: CreateReserveUseCase.Input = {
       start_date: '',
       end_date: '',
-      id_vehicle: '',
-      id_user: '',
+      vehicle_id: '',
+      user_id: '',
     }
 
     await expect(useCase.execute(input)).rejects.toThrow(BadRequestError)
@@ -93,8 +93,8 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: today.toISOString(),
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     }
 
     await expect(useCase.execute(input)).rejects.toThrow(BadRequestError)
@@ -123,16 +123,16 @@ describe('CreateReserveUseCase Unit Tests', () => {
     const existingReserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     })
     await reservesRepository.insert(existingReserve)
 
     const input: CreateReserveUseCase.Input = {
       start_date: tomorrow.toISOString(),
       end_date: dayAfterTomorrow.toISOString(),
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     }
 
     await expect(useCase.execute(input)).rejects.toThrow(ConflictError)

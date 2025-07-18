@@ -15,12 +15,12 @@ export async function updateReserveController(
   const bodySchema = z.object({
     start_date: z.string().optional(),
     end_date: z.string().optional(),
-    id_vehicle: z.string().optional(),
-    id_user: z.string().optional(),
+    vehicle_id: z.string().optional(),
+    user_id: z.string().optional(),
   })
 
   const { id } = dataValidation(paramsSchema, request.params)
-  const { start_date, end_date, id_vehicle, id_user } = dataValidation(
+  const { start_date, end_date, vehicle_id, user_id } = dataValidation(
     bodySchema,
     request.body,
   )
@@ -33,8 +33,8 @@ export async function updateReserveController(
     id,
     start_date,
     end_date,
-    id_vehicle,
-    id_user,
+    vehicle_id,
+    user_id,
   })
 
   return response.json(reserve)

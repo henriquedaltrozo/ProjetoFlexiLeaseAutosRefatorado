@@ -20,8 +20,8 @@ describe('GetReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: 'vehicle-id',
-      id_user: 'user-id',
+      vehicle_id: 'vehicle-id',
+      user_id: 'user-id',
     })
     await reservesRepository.insert(reserve)
 
@@ -34,8 +34,8 @@ describe('GetReserveUseCase Unit Tests', () => {
     expect(output.id).toBe(reserve.id)
     expect(output.start_date).toEqual(tomorrow)
     expect(output.end_date).toEqual(dayAfterTomorrow)
-    expect(output.id_vehicle).toBe('vehicle-id')
-    expect(output.id_user).toBe('user-id')
+    expect(output.vehicle_id).toBe('vehicle-id')
+    expect(output.user_id).toBe('user-id')
     expect(output.created_at).toBeDefined()
     expect(output.updated_at).toBeDefined()
   })

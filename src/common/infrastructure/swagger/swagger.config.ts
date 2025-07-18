@@ -166,7 +166,7 @@ const options: swaggerJSDoc.Options = {
         },
         ReserveInput: {
           type: 'object',
-          required: ['start_date', 'end_date', 'id_vehicle', 'id_user'],
+          required: ['start_date', 'end_date', 'vehicle_id', 'user_id'],
           properties: {
             start_date: {
               type: 'string',
@@ -178,12 +178,12 @@ const options: swaggerJSDoc.Options = {
               format: 'date-time',
               description: 'Data de fim da reserva',
             },
-            id_vehicle: {
+            vehicle_id: {
               type: 'string',
               format: 'uuid',
               description: 'ID do veículo a ser reservado',
             },
-            id_user: {
+            user_id: {
               type: 'string',
               format: 'uuid',
               description: 'ID do usuário que fez a reserva',
@@ -208,12 +208,12 @@ const options: swaggerJSDoc.Options = {
               format: 'date-time',
               description: 'Data de fim da reserva',
             },
-            id_vehicle: {
+            vehicle_id: {
               type: 'string',
               format: 'uuid',
               description: 'ID do veículo reservado',
             },
-            id_user: {
+            user_id: {
               type: 'string',
               format: 'uuid',
               description: 'ID do usuário que fez a reserva',

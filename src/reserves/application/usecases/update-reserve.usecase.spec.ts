@@ -44,8 +44,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     })
     await reservesRepository.insert(reserve)
 
@@ -53,15 +53,15 @@ describe('UpdateReserveUseCase Unit Tests', () => {
       id: reserve.id,
       start_date: tomorrow.toISOString(),
       end_date: threeDaysLater.toISOString(),
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     })
 
     expect(output.id).toBe(reserve.id)
     expect(output.end_date).toEqual(threeDaysLater)
     expect(output.start_date).toEqual(tomorrow)
-    expect(output.id_vehicle).toBe(vehicle.id)
-    expect(output.id_user).toBe(user.id)
+    expect(output.vehicle_id).toBe(vehicle.id)
+    expect(output.user_id).toBe(user.id)
   })
 
   it('should throw NotFoundError when reserve does not exist', async () => {
@@ -73,8 +73,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: 'non-existent-id',
         start_date: tomorrow.toISOString(),
         end_date: dayAfterTomorrow.toISOString(),
-        id_vehicle: 'vehicle-id',
-        id_user: 'user-id',
+        vehicle_id: 'vehicle-id',
+        user_id: 'user-id',
       }),
     ).rejects.toThrow(
       new NotFoundError('Model not found using ID non-existent-id'),
@@ -88,8 +88,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: new Date(Date.now() + 48 * 60 * 60 * 1000),
-      id_vehicle: 'vehicle-id',
-      id_user: 'user-id',
+      vehicle_id: 'vehicle-id',
+      user_id: 'user-id',
     })
     await reservesRepository.insert(reserve)
 
@@ -98,8 +98,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: reserve.id,
         start_date: yesterday.toISOString(),
         end_date: tomorrow.toISOString(),
-        id_vehicle: 'vehicle-id',
-        id_user: 'user-id',
+        vehicle_id: 'vehicle-id',
+        user_id: 'user-id',
       }),
     ).rejects.toThrow(new BadRequestError('Start date cannot be in the past'))
   })
@@ -111,8 +111,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     const reserve = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: 'vehicle-id',
-      id_user: 'user-id',
+      vehicle_id: 'vehicle-id',
+      user_id: 'user-id',
     })
     await reservesRepository.insert(reserve)
 
@@ -121,8 +121,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: reserve.id,
         start_date: dayAfterTomorrow.toISOString(),
         end_date: tomorrow.toISOString(),
-        id_vehicle: 'vehicle-id',
-        id_user: 'user-id',
+        vehicle_id: 'vehicle-id',
+        user_id: 'user-id',
       }),
     ).rejects.toThrow(new BadRequestError('Start date must be before end date'))
   })
@@ -151,16 +151,16 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     const existingReserve = reservesRepository.create({
       start_date: dayAfterTomorrow,
       end_date: threeDaysLater,
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     })
     await reservesRepository.insert(existingReserve)
 
     const reserveToUpdate = reservesRepository.create({
       start_date: tomorrow,
       end_date: dayAfterTomorrow,
-      id_vehicle: vehicle.id,
-      id_user: user.id,
+      vehicle_id: vehicle.id,
+      user_id: user.id,
     })
     await reservesRepository.insert(reserveToUpdate)
 
@@ -169,8 +169,8 @@ describe('UpdateReserveUseCase Unit Tests', () => {
         id: reserveToUpdate.id,
         start_date: tomorrow.toISOString(),
         end_date: threeDaysLater.toISOString(),
-        id_vehicle: vehicle.id,
-        id_user: user.id,
+        vehicle_id: vehicle.id,
+        user_id: user.id,
       }),
     ).rejects.toThrow(
       new ConflictError('Vehicle is already reserved for the selected period'),
