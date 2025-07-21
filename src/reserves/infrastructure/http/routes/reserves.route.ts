@@ -10,14 +10,14 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  * @swagger
  * tags:
  *   name: Reserves
- *   description: Gerenciamento de reservas de veículos
+ *   description: Vehicle reserve management
  */
 
 /**
  * @swagger
  * /reserves:
  *   post:
- *     summary: Criar uma nova reserva
+ *     summary: Create a new reserve
  *     tags: [Reserves]
  *     security:
  *       - bearerAuth: []
@@ -26,91 +26,175 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ReserveInput'
+ *             type: object
+ *             required:
+ *               - start_date
+ *               - end_date
+ *               - vehicle_id
+ *               - user_id
+ *             properties:
+ *               start_date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: Reserve start date
+ *                 example: "2025-07-25T10:00:00.000Z"
+ *               end_date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: Reserve end date
+ *                 example: "2025-07-30T18:00:00.000Z"
+ *               vehicle_id:
+ *                 type: string
+ *                 format: uuid
+ *                 description: Vehicle ID
+ *                 example: "4855d1a0-c790-4c36-86f2-39c6ca5aa94e"
+ *               user_id:
+ *                 type: string
+ *                 format: uuid
+ *                 description: User ID
+ *                 example: "866da2c8-0e69-4089-9abf-0d4332751165"
  *     responses:
  *       201:
- *         description: Reserva criada com sucesso
+ *         description: Reserve created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Reserve'
- *       400:
- *         description: Dados inválidos
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: Reserve ID
+ *                   example: "abc12345-6789-0def-1234-567890abcdef"
+ *                 start_date:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve start date
+ *                   example: "2025-07-25T10:00:00.000Z"
+ *                 end_date:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve end date
+ *                   example: "2025-07-30T18:00:00.000Z"
+ *                 vehicle_id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: Vehicle ID
+ *                   example: "4855d1a0-c790-4c36-86f2-39c6ca5aa94e"
+ *                 user_id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: User ID
+ *                   example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve creation timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve update timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       409:
- *         description: Veículo não disponível no período solicitado
+ *         description: Conflict
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Vehicle is already reserved for the selected period"
  */
 
 /**
  * @swagger
  * /reserves:
  *   get:
- *     summary: Listar reservas
+ *     summary: List reserves
  *     tags: [Reserves]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           default: 1
- *         description: Número da página
- *       - in: query
- *         name: per_page
- *         schema:
- *           type: integer
- *           default: 15
- *         description: Itens por página
- *       - in: query
- *         name: sort
- *         schema:
- *           type: string
- *         description: Campo para ordenação
- *       - in: query
- *         name: sort_dir
- *         schema:
- *           type: string
- *           enum: [asc, desc]
- *         description: Direção da ordenação
- *       - in: query
- *         name: filter
- *         schema:
- *           type: string
- *         description: Filtro de busca
  *     responses:
  *       200:
- *         description: Lista de reservas
+ *         description: List of reserves
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PaginationOutput'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     format: uuid
+ *                     description: Reserve ID
+ *                     example: "abc12345-6789-0def-1234-567890abcdef"
+ *                   start_date:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Reserve start date
+ *                     example: "2025-07-25T10:00:00.000Z"
+ *                   end_date:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Reserve end date
+ *                     example: "2025-07-30T18:00:00.000Z"
+ *                   vehicle_id:
+ *                     type: string
+ *                     format: uuid
+ *                     description: Vehicle ID
+ *                     example: "4855d1a0-c790-4c36-86f2-39c6ca5aa94e"
+ *                   user_id:
+ *                     type: string
+ *                     format: uuid
+ *                     description: User ID
+ *                     example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                   created_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Reserve creation timestamp
+ *                     example: "2025-07-21T00:59:26.002Z"
+ *                   updated_at:
+ *                     type: string
+ *                     format: date-time
+ *                     description: Reserve update timestamp
+ *                     example: "2025-07-21T00:59:26.002Z"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  */
 
 /**
  * @swagger
  * /reserves/{id}:
  *   get:
- *     summary: Buscar reserva por ID
+ *     summary: Get reserve by ID
  *     tags: [Reserves]
  *     security:
  *       - bearerAuth: []
@@ -121,33 +205,83 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *         schema:
  *           type: string
  *           format: uuid
- *         description: ID da reserva
+ *         description: Reserve ID
  *     responses:
  *       200:
- *         description: Reserva encontrada
+ *         description: Reserve found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Reserve'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: Reserve ID
+ *                   example: "abc12345-6789-0def-1234-567890abcdef"
+ *                 start_date:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve start date
+ *                   example: "2025-07-25T10:00:00.000Z"
+ *                 end_date:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve end date
+ *                   example: "2025-07-30T18:00:00.000Z"
+ *                 vehicle_id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: Vehicle ID
+ *                   example: "4855d1a0-c790-4c36-86f2-39c6ca5aa94e"
+ *                 user_id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: User ID
+ *                   example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve creation timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve update timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       404:
- *         description: Reserva não encontrada
+ *         description: Not Found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Reserve not found with the provided ID"
  */
 
 /**
  * @swagger
  * /reserves/{id}:
  *   put:
- *     summary: Atualizar reserva
+ *     summary: Update reserve
  *     tags: [Reserves]
  *     security:
  *       - bearerAuth: []
@@ -158,51 +292,123 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *         schema:
  *           type: string
  *           format: uuid
- *         description: ID da reserva
+ *         description: Reserve ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/ReserveInput'
+ *             type: object
+ *             properties:
+ *               start_date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: Reserve start date
+ *                 example: "2025-07-26T10:00:00.000Z"
+ *               end_date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: Reserve end date
+ *                 example: "2025-07-31T18:00:00.000Z"
+ *               vehicle_id:
+ *                 type: string
+ *                 format: uuid
+ *                 description: Vehicle ID
+ *                 example: "4855d1a0-c790-4c36-86f2-39c6ca5aa94e"
+ *               user_id:
+ *                 type: string
+ *                 format: uuid
+ *                 description: User ID
+ *                 example: "866da2c8-0e69-4089-9abf-0d4332751165"
  *     responses:
  *       200:
- *         description: Reserva atualizada com sucesso
+ *         description: Reserve updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Reserve'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: Reserve ID
+ *                   example: "abc12345-6789-0def-1234-567890abcdef"
+ *                 start_date:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve start date
+ *                   example: "2025-07-26T10:00:00.000Z"
+ *                 end_date:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve end date
+ *                   example: "2025-07-31T18:00:00.000Z"
+ *                 vehicle_id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: Vehicle ID
+ *                   example: "4855d1a0-c790-4c36-86f2-39c6ca5aa94e"
+ *                 user_id:
+ *                   type: string
+ *                   format: uuid
+ *                   description: User ID
+ *                   example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve creation timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Reserve update timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
  *       400:
- *         description: Dados inválidos
+ *         description: Bad Request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "id -> Invalid uuid"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       404:
- *         description: Reserva não encontrada
+ *         description: Not Found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *       409:
- *         description: Veículo não disponível no período solicitado
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Reserve not found with the provided ID"
  */
 
 /**
  * @swagger
  * /reserves/{id}:
  *   delete:
- *     summary: Deletar reserva
+ *     summary: Delete reserve
  *     tags: [Reserves]
  *     security:
  *       - bearerAuth: []
@@ -213,22 +419,36 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *         schema:
  *           type: string
  *           format: uuid
- *         description: ID da reserva
+ *         description: Reserve ID
  *     responses:
  *       204:
- *         description: Reserva deletada com sucesso
+ *         description: Reserve deleted successfully
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       404:
- *         description: Reserva não encontrada
+ *         description: Not Found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Reserve not found with the provided ID"
  */
 
 const reservesRouter = Router()
