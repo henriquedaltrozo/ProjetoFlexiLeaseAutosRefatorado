@@ -91,19 +91,6 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *                 message:
  *                   type: string
  *                   example: "email -> Invalid email"
- *       401:
- *         description: Unauthorized
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: "error"
- *                 message:
- *                   type: string
- *                   example: "Token is missing"
  *       409:
  *         description: Conflict
  *         content:
