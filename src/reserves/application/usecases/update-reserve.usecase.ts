@@ -54,10 +54,6 @@ export namespace UpdateReserveUseCase {
         throw new BadRequestError('Start date must be before end date')
       }
 
-      if (startDate < new Date()) {
-        throw new BadRequestError('Start date cannot be in the past')
-      }
-
       if (
         updateData.start_date ||
         updateData.end_date ||
