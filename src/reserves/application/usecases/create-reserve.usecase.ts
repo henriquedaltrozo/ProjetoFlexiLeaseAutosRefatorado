@@ -44,10 +44,6 @@ export namespace CreateReserveUseCase {
         throw new BadRequestError('Start date must be before end date')
       }
 
-      if (startDate < new Date()) {
-        throw new BadRequestError('Start date cannot be in the past')
-      }
-
       await this.usersRepository.findById(input.user_id)
 
       await this.vehiclesRepository.findById(input.vehicle_id)

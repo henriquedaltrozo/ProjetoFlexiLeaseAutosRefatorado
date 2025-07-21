@@ -105,7 +105,7 @@ export class ReservesTypeormRepository implements ReservesRepository {
   protected async _get(id: string): Promise<ReserveModel> {
     const reserve = await this.reservesRepository.findOneBy({ id })
     if (!reserve) {
-      throw new NotFoundError(`Reserve not found using ID ${id}`)
+      throw new NotFoundError(`Reserve not found with the provided ID`)
     }
     return reserve
   }

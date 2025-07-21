@@ -10,99 +10,165 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  * @swagger
  * tags:
  *   name: Users
- *   description: Gerenciamento de usuários
+ *   description: User management
  */
 
 /**
  * @swagger
  * /users:
  *   post:
- *     summary: Criar um novo usuário
+ *     summary: Create a new user
  *     tags: [Users]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UserInput'
+ *             type: object
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: User name
+ *                 example: "John Doe"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: User email
+ *                 example: "john.doe@example.com"
+ *               password:
+ *                 type: string
+ *                 description: User password
+ *                 example: "pass1234"
  *     responses:
  *       201:
- *         description: Usuário criado com sucesso
+ *         description: User created successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: User ID
+ *                   example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                 name:
+ *                   type: string
+ *                   description: User name
+ *                   example: "John Doe"
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                   description: User email
+ *                   example: "john.doe@example.com"
+ *                 password:
+ *                   type: string
+ *                   description: User password
+ *                   example: "pass1234"
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: User creation timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: User update timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
  *       400:
- *         description: Dados inválidos
+ *         description: Bad Request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "email -> Invalid email"
  *       409:
- *         description: Email já está em uso
+ *         description: Conflict
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Email already in use"
  */
 
 /**
  * @swagger
  * /users:
  *   get:
- *     summary: Listar usuários
+ *     summary: List users
  *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           default: 1
- *         description: Número da página
- *       - in: query
- *         name: per_page
- *         schema:
- *           type: integer
- *           default: 15
- *         description: Itens por página
- *       - in: query
- *         name: sort
- *         schema:
- *           type: string
- *         description: Campo para ordenação
- *       - in: query
- *         name: sort_dir
- *         schema:
- *           type: string
- *           enum: [asc, desc]
- *         description: Direção da ordenação
- *       - in: query
- *         name: filter
- *         schema:
- *           type: string
- *         description: Filtro de busca
  *     responses:
  *       200:
- *         description: Lista de usuários
+ *         description: List of users
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/PaginationOutput'
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                       id:
+ *                         type: string
+ *                         description: User ID
+ *                         example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                       name:
+ *                         type: string
+ *                         description: User name
+ *                         example: "John Doe"
+ *                       email:
+ *                         type: string
+ *                         format: email
+ *                         description: User email
+ *                         example: "john.doe@example.com"
+ *                       password:
+ *                         type: string
+ *                         description: User password
+ *                         example: "pass1234"
+ *                       created_at:
+ *                         type: string
+ *                         format: date-time
+ *                         description: User creation timestamp
+ *                         example: "2025-07-21T00:59:26.002Z"
+ *                       updated_at:
+ *                         type: string
+ *                         format: date-time
+ *                         description: User update timestamp
+ *                         example: "2025-07-21T00:59:26.002Z"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  */
 
 /**
  * @swagger
  * /users/{id}:
  *   get:
- *     summary: Buscar usuário por ID
+ *     summary: Get user by ID
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -113,33 +179,88 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *         schema:
  *           type: string
  *           format: uuid
- *         description: ID do usuário
+ *         description: User ID
  *     responses:
  *       200:
- *         description: Usuário encontrado
+ *         description: User found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: User ID
+ *                   example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                 name:
+ *                   type: string
+ *                   description: User name
+ *                   example: "John Doe"
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                   description: User email
+ *                   example: "john.doe@example.com"
+ *                 password:
+ *                   type: string
+ *                   description: User password
+ *                   example: "pass1234"
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: User creation timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: User update timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "id -> Invalid uuid"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       404:
- *         description: Usuário não encontrado
+ *         description: Not Found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "User not found with the provided ID"
  */
 
 /**
  * @swagger
  * /users/{id}:
  *   put:
- *     summary: Atualizar usuário
+ *     summary: Update user
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -150,51 +271,108 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *         schema:
  *           type: string
  *           format: uuid
- *         description: ID do usuário
+ *         description: User ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UserUpdate'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: User name
+ *                 example: "John"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: User email
+ *                 example: "john@test.com"
+ *               password:
+ *                 type: string
+ *                 description: User password
+ *                 example: "password"
  *     responses:
  *       200:
- *         description: Usuário atualizado com sucesso
+ *         description: User updated successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: User ID
+ *                   example: "866da2c8-0e69-4089-9abf-0d4332751165"
+ *                 name:
+ *                   type: string
+ *                   description: User name
+ *                   example: "John"
+ *                 email:
+ *                   type: string
+ *                   format: email
+ *                   description: User email
+ *                   example: "john@test.com"
+ *                 password:
+ *                   type: string
+ *                   description: User password
+ *                   example: "password"
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: User creation timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *                   description: User update timestamp
+ *                   example: "2025-07-21T00:59:26.002Z"
  *       400:
- *         description: Dados inválidos
+ *         description: Bad Request
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "id -> Invalid uuid"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       404:
- *         description: Usuário não encontrado
+ *         description: Not Found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
- *       409:
- *         description: Email já está em uso
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "User not found with the provided ID"
  */
 
 /**
  * @swagger
  * /users/{id}:
  *   delete:
- *     summary: Deletar usuário
+ *     summary: Delete user
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
@@ -205,22 +383,49 @@ import { isAuthenticated } from '@/common/infrastructure/http/middlewares/isAuth
  *         schema:
  *           type: string
  *           format: uuid
- *         description: ID do usuário
+ *         description: User ID
  *     responses:
  *       204:
- *         description: Usuário deletado com sucesso
+ *         description: User deleted successfully
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "id -> Invalid uuid"
  *       401:
- *         description: Token inválido ou ausente
+ *         description: Unauthorized
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "Token is missing"
  *       404:
- *         description: Usuário não encontrado
+ *         description: Not Found
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Error'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: "error"
+ *                 message:
+ *                   type: string
+ *                   example: "User not found with the provided ID"
  */
 
 const usersRouter = Router()

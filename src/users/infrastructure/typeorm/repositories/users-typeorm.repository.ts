@@ -25,7 +25,7 @@ export class UsersTypeormRepository implements UsersRepository {
   async findByEmail(email: string): Promise<UserModel> {
     const user = await this.usersRepository.findOneBy({ email })
     if (!user) {
-      throw new NotFoundError(`User not found using email ${email}`)
+      throw new NotFoundError(`User not found with the provided email`)
     }
     return user
   }
@@ -41,7 +41,7 @@ export class UsersTypeormRepository implements UsersRepository {
   async conflictingEmail(email: string): Promise<void> {
     const user = await this.usersRepository.findOneBy({ email })
     if (user) {
-      throw new ConflictError('Email already used on another user')
+      throw new ConflictError('Email already in use')
     }
   }
 
@@ -103,7 +103,7 @@ export class UsersTypeormRepository implements UsersRepository {
   protected async _get(id: string): Promise<UserModel> {
     const user = await this.usersRepository.findOneBy({ id })
     if (!user) {
-      throw new NotFoundError(`User not found using ID ${id}`)
+      throw new NotFoundError(`User not found with the provided ID`)
     }
     return user
   }
