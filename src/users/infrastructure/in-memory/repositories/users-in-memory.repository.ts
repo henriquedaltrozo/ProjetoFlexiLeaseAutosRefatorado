@@ -13,7 +13,7 @@ export class UsersInMemoryRepository
   async findByEmail(email: string): Promise<UserModel> {
     const model = this.items.find(item => item.email === email)
     if (!model) {
-      throw new NotFoundError(`User not found using email ${email}`)
+      throw new NotFoundError(`User not found with the provided email`)
     }
     return model
   }
