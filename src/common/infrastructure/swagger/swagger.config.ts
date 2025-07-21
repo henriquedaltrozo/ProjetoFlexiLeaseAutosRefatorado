@@ -6,30 +6,30 @@ const options: swaggerJSDoc.Options = {
     info: {
       title: 'FlexiLease Autos API',
       version: '1.0.0',
-      description: 'API para sistema de locação de veículos FlexiLease Autos',
+      description: 'API for FlexiLease Autos vehicle rental system',
     },
     servers: [
       {
         url: 'http://localhost:3333',
-        description: 'Servidor de Desenvolvimento',
+        description: 'Development Server',
       },
     ],
     tags: [
       {
         name: 'Authentication',
-        description: 'Autenticação de usuários',
+        description: 'User authentication',
       },
       {
         name: 'Users',
-        description: 'Gerenciamento de usuários',
+        description: 'User management',
       },
       {
         name: 'Vehicles',
-        description: 'Gerenciamento de veículos',
+        description: 'Vehicle management',
       },
       {
         name: 'Reserves',
-        description: 'Gerenciamento de reservas de veículos',
+        description: 'Vehicle reservation management',
       },
     ],
     components: {
@@ -41,56 +41,42 @@ const options: swaggerJSDoc.Options = {
         },
       },
       schemas: {
-        UserInput: {
+        User: {
           type: 'object',
           required: ['name', 'email', 'password'],
-          properties: {
-            name: {
-              type: 'string',
-              description: 'Nome do usuário',
-            },
-            email: {
-              type: 'string',
-              format: 'email',
-              description: 'Email do usuário',
-            },
-            password: {
-              type: 'string',
-              minLength: 6,
-              description: 'Senha do usuário',
-            },
-          },
-        },
-        UserOutput: {
-          type: 'object',
           properties: {
             id: {
               type: 'string',
               format: 'uuid',
-              description: 'ID único do usuário',
+              description: 'Unique user ID',
             },
             name: {
               type: 'string',
-              description: 'Nome do usuário',
+              description: 'User name',
             },
             email: {
               type: 'string',
               format: 'email',
-              description: 'Email do usuário',
+              description: 'User email',
+            },
+            password: {
+              type: 'string',
+              format: 'password',
+              description: 'User password',
             },
             created_at: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de criação',
+              description: 'Creation date',
             },
             updated_at: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de atualização',
+              description: 'Update date',
             },
           },
         },
-        VehicleInput: {
+        Vehicle: {
           type: 'object',
           required: [
             'name',
@@ -100,170 +86,82 @@ const options: swaggerJSDoc.Options = {
             'number_of_passengers',
           ],
           properties: {
-            name: {
-              type: 'string',
-              description: 'Nome/modelo do veículo',
-            },
-            color: {
-              type: 'string',
-              description: 'Cor do veículo',
-            },
-            year: {
-              type: 'integer',
-              description: 'Ano do veículo',
-            },
-            value_per_day: {
-              type: 'number',
-              format: 'float',
-              description: 'Valor por dia de locação',
-            },
-            number_of_passengers: {
-              type: 'integer',
-              description: 'Número de passageiros',
-            },
-          },
-        },
-        VehicleOutput: {
-          type: 'object',
-          properties: {
             id: {
               type: 'string',
               format: 'uuid',
-              description: 'ID único do veículo',
+              description: 'Unique vehicle ID',
             },
             name: {
               type: 'string',
-              description: 'Nome/modelo do veículo',
+              description: 'Vehicle name/model',
             },
             color: {
               type: 'string',
-              description: 'Cor do veículo',
+              description: 'Vehicle color',
             },
             year: {
               type: 'integer',
-              description: 'Ano do veículo',
+              description: 'Vehicle year',
             },
             value_per_day: {
               type: 'number',
               format: 'float',
-              description: 'Valor por dia de locação',
+              description: 'Daily rental value',
             },
             number_of_passengers: {
               type: 'integer',
-              description: 'Número de passageiros',
+              description: 'Number of passengers',
             },
             created_at: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de criação',
+              description: 'Creation date',
             },
             updated_at: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de atualização',
+              description: 'Update date',
             },
           },
         },
-        ReserveInput: {
+        Reserve: {
           type: 'object',
           required: ['start_date', 'end_date', 'vehicle_id', 'user_id'],
           properties: {
-            start_date: {
-              type: 'string',
-              format: 'date-time',
-              description: 'Data de início da reserva',
-            },
-            end_date: {
-              type: 'string',
-              format: 'date-time',
-              description: 'Data de fim da reserva',
-            },
-            vehicle_id: {
-              type: 'string',
-              format: 'uuid',
-              description: 'ID do veículo a ser reservado',
-            },
-            user_id: {
-              type: 'string',
-              format: 'uuid',
-              description: 'ID do usuário que fez a reserva',
-            },
-          },
-        },
-        ReserveOutput: {
-          type: 'object',
-          properties: {
             id: {
               type: 'string',
               format: 'uuid',
-              description: 'ID único da reserva',
+              description: 'Unique reservation ID',
             },
             start_date: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de início da reserva',
+              description: 'Reservation start date',
             },
             end_date: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de fim da reserva',
+              description: 'Reservation end date',
             },
             vehicle_id: {
               type: 'string',
               format: 'uuid',
-              description: 'ID do veículo reservado',
+              description: 'ID of the reserved vehicle',
             },
             user_id: {
               type: 'string',
               format: 'uuid',
-              description: 'ID do usuário que fez a reserva',
+              description: 'ID of the user who made the reservation',
             },
             created_at: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de criação',
+              description: 'Creation date',
             },
             updated_at: {
               type: 'string',
               format: 'date-time',
-              description: 'Data de atualização',
-            },
-          },
-        },
-        LoginInput: {
-          type: 'object',
-          required: ['email', 'password'],
-          properties: {
-            email: {
-              type: 'string',
-              format: 'email',
-              description: 'Email do usuário',
-            },
-            password: {
-              type: 'string',
-              description: 'Senha do usuário',
-            },
-          },
-        },
-        LoginOutput: {
-          type: 'object',
-          properties: {
-            access_token: {
-              type: 'string',
-              description: 'Token JWT para autenticação',
-            },
-          },
-        },
-        Error: {
-          type: 'object',
-          properties: {
-            message: {
-              type: 'string',
-              description: 'Mensagem de erro',
-            },
-            code: {
-              type: 'string',
-              description: 'Código do erro',
+              description: 'Update date',
             },
           },
         },
