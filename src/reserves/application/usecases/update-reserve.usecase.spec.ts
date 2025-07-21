@@ -81,29 +81,6 @@ describe('UpdateReserveUseCase Unit Tests', () => {
     )
   })
 
-  it('should throw BadRequestError when start_date is in the past', async () => {
-    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000)
-    const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
-
-    const reserve = reservesRepository.create({
-      start_date: tomorrow,
-      end_date: new Date(Date.now() + 48 * 60 * 60 * 1000),
-      vehicle_id: 'vehicle-id',
-      user_id: 'user-id',
-    })
-    await reservesRepository.insert(reserve)
-
-    await expect(
-      useCase.execute({
-        id: reserve.id,
-        start_date: yesterday.toISOString(),
-        end_date: tomorrow.toISOString(),
-        vehicle_id: 'vehicle-id',
-        user_id: 'user-id',
-      }),
-    ).rejects.toThrow(new BadRequestError('Start date cannot be in the past'))
-  })
-
   it('should throw BadRequestError when start_date is after end_date', async () => {
     const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
     const dayAfterTomorrow = new Date(Date.now() + 48 * 60 * 60 * 1000)

@@ -100,7 +100,7 @@ describe('CreateReserveUseCase Unit Tests', () => {
     await expect(useCase.execute(input)).rejects.toThrow(BadRequestError)
   })
 
-  it('should throw error when dates conflict with existing reservation', async () => {
+  it('should throw error when dates conflict with existing reserve', async () => {
     const user = usersRepository.create({
       name: 'Test User',
       email: 'test@test.com',

@@ -13,7 +13,7 @@ export class UsersInMemoryRepository
   async findByEmail(email: string): Promise<UserModel> {
     const model = this.items.find(item => item.email === email)
     if (!model) {
-      throw new NotFoundError(`User not found using email ${email}`)
+      throw new NotFoundError(`User not found with the provided email`)
     }
     return model
   }
@@ -29,7 +29,7 @@ export class UsersInMemoryRepository
   async conflictingEmail(email: string): Promise<void> {
     const user = this.items.find((item: any) => item.email === email)
     if (user) {
-      throw new ConflictError('Email already used on another user')
+      throw new ConflictError('Email already in use')
     }
   }
 
