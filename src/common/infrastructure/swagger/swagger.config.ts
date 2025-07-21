@@ -29,7 +29,7 @@ const options: swaggerJSDoc.Options = {
       },
       {
         name: 'Reserves',
-        description: 'Vehicle reservation management',
+        description: 'Vehicle reserve management',
       },
     ],
     components: {
@@ -131,17 +131,17 @@ const options: swaggerJSDoc.Options = {
             id: {
               type: 'string',
               format: 'uuid',
-              description: 'Unique reservation ID',
+              description: 'Unique reserve ID',
             },
             start_date: {
               type: 'string',
               format: 'date-time',
-              description: 'Reservation start date',
+              description: 'Reserve start date',
             },
             end_date: {
               type: 'string',
               format: 'date-time',
-              description: 'Reservation end date',
+              description: 'Reserve end date',
             },
             vehicle_id: {
               type: 'string',
@@ -151,7 +151,7 @@ const options: swaggerJSDoc.Options = {
             user_id: {
               type: 'string',
               format: 'uuid',
-              description: 'ID of the user who made the reservation',
+              description: 'ID of the user who made the reserve',
             },
             created_at: {
               type: 'string',
