@@ -29,7 +29,7 @@ export class UsersInMemoryRepository
   async conflictingEmail(email: string): Promise<void> {
     const user = this.items.find((item: any) => item.email === email)
     if (user) {
-      throw new ConflictError('Email already used on another user')
+      throw new ConflictError('Email already in use')
     }
   }
 

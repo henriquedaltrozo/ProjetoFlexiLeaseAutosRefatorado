@@ -41,7 +41,7 @@ export class UsersTypeormRepository implements UsersRepository {
   async conflictingEmail(email: string): Promise<void> {
     const user = await this.usersRepository.findOneBy({ email })
     if (user) {
-      throw new ConflictError('Email already used on another user')
+      throw new ConflictError('Email already in use')
     }
   }
 
