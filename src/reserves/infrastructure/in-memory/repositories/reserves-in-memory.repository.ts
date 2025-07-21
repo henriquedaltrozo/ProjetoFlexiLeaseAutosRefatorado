@@ -48,4 +48,12 @@ export class ReservesInMemoryRepository
       )
     })
   }
+
+  protected async applySort(
+    items: ReserveModel[],
+    sort: string | null,
+    sort_dir: string | null,
+  ): Promise<ReserveModel[]> {
+    return super.applySort(items, sort ?? 'created_at', sort_dir ?? 'desc')
+  }
 }
