@@ -9,7 +9,7 @@ export async function getReserveController(
   response: Response,
 ): Promise<Response> {
   const paramsSchema = z.object({
-    id: z.string(),
+    id: z.string().uuid(),
   })
 
   const { id } = dataValidation(paramsSchema, request.params)

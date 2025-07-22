@@ -9,14 +9,14 @@ export async function updateReserveController(
   response: Response,
 ): Promise<Response> {
   const paramsSchema = z.object({
-    id: z.string(),
+    id: z.string().uuid(),
   })
 
   const bodySchema = z.object({
     start_date: z.string().optional(),
     end_date: z.string().optional(),
-    vehicle_id: z.string().optional(),
-    user_id: z.string().optional(),
+    vehicle_id: z.string().uuid().optional(),
+    user_id: z.string().uuid().optional(),
   })
 
   const { id } = dataValidation(paramsSchema, request.params)

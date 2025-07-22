@@ -11,8 +11,8 @@ export async function createReserveController(
   const bodySchema = z.object({
     start_date: z.string(),
     end_date: z.string(),
-    vehicle_id: z.string(),
-    user_id: z.string(),
+    vehicle_id: z.string().uuid(),
+    user_id: z.string().uuid(),
   })
 
   const { start_date, end_date, vehicle_id, user_id } = dataValidation(
