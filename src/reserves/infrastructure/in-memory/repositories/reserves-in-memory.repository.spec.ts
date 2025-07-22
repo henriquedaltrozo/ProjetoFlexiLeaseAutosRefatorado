@@ -58,14 +58,12 @@ describe('ReservesInMemoryRepository unit tests', () => {
       const startDate = new Date('2024-01-01')
       const endDate = new Date('2024-01-05')
 
-      // Reserve for different vehicle
       const otherVehicleReserve = ReservesDataBuilder({
         vehicle_id: 'other_vehicle',
         start_date: new Date('2024-01-02'),
         end_date: new Date('2024-01-04'),
       })
 
-      // Reserve for same vehicle but different dates
       const sameVehicleReserve = ReservesDataBuilder({
         vehicle_id: vehicleId,
         start_date: new Date('2024-01-10'),
