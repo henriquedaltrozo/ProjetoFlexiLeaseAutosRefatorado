@@ -90,7 +90,7 @@ export class VehiclesTypeOrmRepository implements VehiclesRepository {
   protected async _get(id: string): Promise<VehicleModel> {
     const vehicle = await this.vehiclesRepository.findOneBy({ id })
     if (!vehicle) {
-      throw new Error(`Vehicle not found using ID ${id}`)
+      throw new NotFoundError(`Vehicle not found with the provided ID`)
     }
     return vehicle
   }
